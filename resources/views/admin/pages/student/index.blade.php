@@ -105,9 +105,10 @@
                     <td>{{ $valueStudent->mobile_number }}</td>
                     <td>{{ ($valueStudent->status == 0) ? 'Active' : 'Inactive' }}</td>
                     <td>{{ date('d-m-Y H:i A', strtotime($valueStudent->created_at)) }}</td>
-                    <td>
+                    <td style="min-width: 272px">
                       <a href="{{ url('admin/student/edit/'.$valueStudent->id) }}" class="btn btn-primary">Edit</a>
-                      <a href="{{ url('admin/student/delete/'.$valueStudent->id) }}" class="btn btn-danger">Delete</a>
+                      <a href="{{ url('admin/student/delete/'.$valueStudent->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                      <a href="{{ url('chat?receiver_id='.base64_encode($valueStudent->id)) }}" class="btn btn-info">Send Message</a>
                     </td>
                   </tr>   
                   @empty

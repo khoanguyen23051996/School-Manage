@@ -14,6 +14,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" >
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   @yield('style')
 </head>
@@ -77,6 +78,8 @@
 <script src="{{ asset('backend/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('backend/dist/js/pages/dashboard2.js') }}"></script>
+
+
 
 @yield('script')
 

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClassModel;
+use App\Models\SubjectModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,10 +17,21 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         if(Auth::user()->role == 1){
-            return view('admin.pages.dashboard.index');
+            $data['TotalAdmin'] = User::getTotalUser(1);
+            $data['TotalTeacher'] = User::getTotalUser(2);
+            $data['TotalStudent'] = User::getTotalUser(3);
+            $data['TotalParent'] = User::getTotalUser(4);
+            $data['TotalClass'] = ClassModel::getTotalClass();
+            $data['TotalSubject'] = SubjectModel::getTotalSubject();
+
+            return view('admin.pages.dashboard.index', $data);
         }
         elseif(Auth::user()->role == 2){
-            return view('teacher.pages.dashboard.index');
+            $data['TotalStudent'] = User::getTeacherStudentCount(Auth::user()->id);
+            $data['TotalClass'] = ClassModel::getTotalClass();
+            $data['TotalSubject'] = SubjectModel::getTotalSubject();
+
+            return view('teacher.pages.dashboard.index', $data);
         }
         elseif(Auth::user()->role == 3){
             return view('student.pages.dashboard.index');

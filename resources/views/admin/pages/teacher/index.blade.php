@@ -27,19 +27,19 @@
     <form action="" method="GET">
         <div class="card-body">
             <div class="row">
-                <div class="form-group col-md-2" >
+                <div class="form-group col-md-3" >
                     <label for="">Name</label>
                     <input type="text" name="name" class="form-control" placeholder="Name" value="{{ Request::get('name') }}">
                 </div>
-                <div class="form-group col-md-2" >
+                <div class="form-group col-md-3" >
                     <label for="">Email</label>
                     <input type="text" name="email" class="form-control" placeholder="Email" value="{{ Request::get('email') }}">
                 </div>
-                <div class="form-group col-md-2" >
+                <div class="form-group col-md-3" >
                     <label for="">Date</label>
                     <input type="date" name="date" class="form-control" value="{{ Request::get('date') }}">
                 </div>
-                <div class="form-group col-md-2" >
+                <div class="form-group col-md-3" >
                     <button class="btn btn-primary" type="submit" style="margin-top: 32px">Search</button>
                     <a href="{{ route('admin.teacher') }}" class="btn btn-success" style="margin-top: 32px; margin-left: 3px">Reset</a>
                 </div>
@@ -65,7 +65,6 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Gender</th>
                     <th>Date of Birth</th>
                     <th>Date of Joining</th>
                     <th>Address</th>
@@ -90,7 +89,6 @@
 
                     <td>{{ $valueTeacher->name }}</td>
                     <td>{{ $valueTeacher->email }}</td>
-                    <td>{{ $valueTeacher->gender }}</td>
                     
                     <td>
                       @if (!empty($valueTeacher->date_of_birth))
@@ -110,9 +108,10 @@
                     <td>{{ $valueTeacher->work_exp }}</td>
                     <td>{{ ($valueTeacher->status == 0) ? 'Active' : 'Inactive' }}</td>
                     <td>{{ date('d-m-Y H:i A', strtotime($valueTeacher->created_at)) }}</td>
-                    <td>
+                    <td style="min-width: 220px">
                       <a href="{{ url('admin/teacher/edit/'.$valueTeacher->id) }}" class="btn btn-primary">Edit</a>
-                      <a href="{{ url('admin/teacher/delete/'.$valueTeacher->id) }}" class="btn btn-danger">Delete</a>
+                      <a href="{{ url('admin/teacher/delete/'.$valueTeacher->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                      <a style="margin-top: 5px " href="{{ url('chat?receiver_id='.base64_encode($valueTeacher->id)) }}" class="btn btn-info">Send Message</a>
                     </td>
                   </tr>   
                   @empty

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -18,6 +19,7 @@ class StudentController extends Controller
     {
         $student['getRecord'] = User::getStudent();
         $student['getClass'] = ClassModel::getClass();
+
         return view('admin.pages.student.index', $student);
     }
 
@@ -171,5 +173,12 @@ class StudentController extends Controller
         $student->save();
 
         return redirect()->route('admin.student')->with('success', 'Deleted Student Successfully!');
+    }
+
+    public function myStudent(){
+        $student['getRecord'] = User::getTeacherStudent(Auth::user()->id);
+        $student['getClass'] = ClassModel::getClass();
+
+        return view('teacher.pages.my_student.index', $student);
     }
 }

@@ -81,7 +81,7 @@
                     <td>{{ date('d-m-Y H:i A', strtotime($valueClass->created_at)) }}</td>
                     <td>
                       <a href="{{ url('admin/class/edit/'.$valueClass->id) }}" class="btn btn-primary">Edit</a>
-                      <a href="{{ url('admin/class/delete/'.$valueClass->id) }}" class="btn btn-danger">Delete</a>
+                      <a href="{{ url('admin/class/delete/'.$valueClass->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                     </td>
                   </tr>   
                   @empty
