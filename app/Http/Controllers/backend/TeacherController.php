@@ -90,7 +90,14 @@ class TeacherController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $teacher['getTeacher'] = User::find($id);
+
+        if(!empty($teacher['getTeacher'])){
+            return view('admin.pages.teacher.edit', $teacher);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -98,7 +105,48 @@ class TeacherController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'email' => 'required|email|unique:users,email,'.$id,
+            'mobile_number' => 'required|max:12'
+        ]);
+
+
+        $teacher = User::find($id);
+        $teacher->name = trim($request->name);
+        $teacher->last_name = trim($request->last_name);
+        $teacher->gender = trim($request->gender);
+
+        if(!empty($request->date_of_birth)){
+            $teacher->date_of_birth = trim($request->date_of_birth);
+        }
+
+        $teacher->mobile_number = trim($request->mobile_number);
+        $teacher->address = trim($request->address);
+        $teacher->qualification = trim($request->qualification);
+        $teacher->work_exp = trim($request->work_exp);
+
+        if(!empty($request->date_of_joining)){
+            $teacher->date_of_joining = trim($request->date_of_joining);
+        }
+
+        $teacher->status = trim($request->status);
+
+        if(!empty($request->file('image'))){
+            $ext = $request->file('image')->getClientOriginalExtension();
+            $file = $request->file('image');
+            $randomStr = date('Ymdhis').Str::random(20);
+            $fileName = strtolower($randomStr).'.'.$ext;
+            $file->move('upload/profile/', $fileName);
+
+            $teacher->image = $fileName;
+        }
+
+        $teacher->email = trim($request->email);
+        $teacher->password = Hash::make($request->password);
+        $teacher->role = 2;
+        $teacher->save();
+
+        return redirect()->route('admin.teacher')->with('success', 'Update Teacher Successfully!');
     }
 
     /**
@@ -106,6 +154,11 @@ class TeacherController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $teacher = User::find($id);
+        
+        $teacher->soft_delete = 1;
+        $teacher->save();
+
+        return redirect()->route('admin.teacher')->with('success', 'Deleted Teacher Successfully!');
     }
 }

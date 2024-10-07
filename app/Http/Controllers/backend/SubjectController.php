@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClassSubjectModel;
 use App\Models\SubjectModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +17,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subject['getRecord'] = SubjectModel::getRecord();
+
         return view('admin.pages.subject.index', $subject);
     }
 
@@ -89,5 +92,20 @@ class SubjectController extends Controller
         $subject->save();
 
         return redirect()->route('admin.subject')->with('success', 'Deleted Subject Successfully!');
+    }
+
+    public function mySubject(){
+        $subject['getRecord'] = ClassSubjectModel::mySubject(Auth::user()->class_id);
+
+        return view('student.pages.my_subject.index', $subject);
+    }
+
+    public function ParentStudentSubject($student_id){
+        $user = User::find($student_id);
+
+        $data['getUser'] = $user;
+        $data['getRecord'] = ClassSubjectModel::mySubject($user->class_id);
+
+        return view('parent.pages.my_student.my_student_subject', $data);
     }
 }

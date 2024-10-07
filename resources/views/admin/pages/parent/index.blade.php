@@ -81,8 +81,9 @@
                     <td>{{ date('d-m-Y H:i A', strtotime($valueParent->created_at)) }}</td>
                     <td>
                       <a href="{{ url('admin/parent/edit/'.$valueParent->id) }}" class="btn btn-primary">Edit</a>
-                      <a href="{{ url('admin/parent/delete/'.$valueParent->id) }}" class="btn btn-danger">Delete</a>
-                      <a href="{{ url('admin/parent/my-student/'.$valueParent->id) }}" class="btn btn-info">Assign Student</a>
+                      <a href="{{ url('admin/parent/delete/'.$valueParent->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                      <a href="{{ url('admin/parent/my-student/'.$valueParent->id) }}" class="btn btn-success">Assign Student</a>
+                      <a href="{{ url('chat?receiver_id='.base64_encode($valueParent->id)) }}" class="btn btn-info">Send Message</a>
                     </td>
                   </tr>   
                   @empty

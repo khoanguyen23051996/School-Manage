@@ -28,6 +28,7 @@ class ClassSubjectController extends Controller
     {
         $assign_subject['getClass'] = ClassModel::getClass();
         $assign_subject['getSubject'] = SubjectModel::getSubject();
+        
         return view('admin.pages.assign_subject.create', $assign_subject);
     }
 
@@ -38,7 +39,7 @@ class ClassSubjectController extends Controller
     {
         if(!empty($request->subject_id)){
             foreach($request->subject_id as $subject_id){
-                $getAlreadyFirst = ClassSubjectModel::getAlreadyFirst($request->classid, $subject_id);
+                $getAlreadyFirst = ClassSubjectModel::getAlreadyFirst($request->class_id, $subject_id);
                 if(!empty($getAlreadyFirst)){
                     $getAlreadyFirst->status = trim($request->status);
                     $getAlreadyFirst->save();

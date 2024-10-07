@@ -91,7 +91,7 @@
                     <td>{{ date('d-m-Y H:i A', strtotime($valueSubject->created_at)) }}</td>
                     <td>
                       <a href="{{ url('admin/subject/edit/'.$valueSubject->id) }}" class="btn btn-primary">Edit</a>
-                      <a href="{{ url('admin/subject/delete/'.$valueSubject->id) }}" class="btn btn-danger">Delete</a>
+                      <a href="{{ url('admin/subject/delete/'.$valueSubject->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
                     </td>
                   </tr>   
                   @empty
